@@ -1,0 +1,59 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="feedback">
+            <h2><span jhiTranslate="smartcommunityApp.feedback.detail.title">Feedback</span> {{ feedback.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartcommunityApp.feedback.title">Title</span></dt>
+                <dd>
+                    <span>{{ feedback.title }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.feedback.content">Content</span></dt>
+                <dd>
+                    <span>{{ feedback.content }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.feedback.type">Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'smartcommunityApp.FeedbackType.' + feedback.type }}">{{ feedback.type }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.feedback.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{ 'smartcommunityApp.FeedbackStatus.' + feedback.status }}">{{ feedback.status }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.feedback.creationDate">Creation Date</span></dt>
+                <dd>
+                    <span>{{ feedback.creationDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.feedback.image">Image</span></dt>
+                <dd>
+                    <div *ngIf="feedback.image">
+                        <a (click)="openFile(feedback.imageContentType, feedback.image)">
+                            <img [src]="'data:' + feedback.imageContentType + ';base64,' + feedback.image" style="max-width: 100%;" alt="feedback image"/>
+                        </a>
+                        {{ feedback.imageContentType }}, {{ byteSize(feedback.image) }}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.feedback.user">User</span></dt>
+                <dd>
+                    {{ feedback.userLogin }}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/feedback', feedback.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

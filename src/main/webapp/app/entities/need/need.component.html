@@ -1,0 +1,86 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="smartcommunityApp.need.home.title">Needs</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-need" [routerLink]="['/need/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="smartcommunityApp.need.home.createLabel">
+            Create a new Need
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="needs?.length === 0">
+        <span jhiTranslate="smartcommunityApp.need.home.notFound">No needs found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="needs && needs.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="name"><span jhiTranslate="smartcommunityApp.need.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="info"><span jhiTranslate="smartcommunityApp.need.info">Info</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="available"><span jhiTranslate="smartcommunityApp.need.available">Available</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="contact"><span jhiTranslate="smartcommunityApp.need.contact">Contact</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="image"><span jhiTranslate="smartcommunityApp.need.image">Image</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="quantity"><span jhiTranslate="smartcommunityApp.need.quantity">Quantity</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let need of needs ;trackBy: trackId">
+                    <td><a [routerLink]="['/need', need.id, 'view']">{{ need.id }}</a></td>
+                    <td>{{ need.name }}</td>
+                    <td>{{ need.info }}</td>
+                    <td>{{ need.available }}</td>
+                    <td>{{ need.contact }}</td>
+                    <td>
+                        <a *ngIf="need.image" (click)="openFile(need.imageContentType, need.image)">
+                            <img [src]="'data:' + need.imageContentType + ';base64,' + need.image" style="max-height: 30px;" alt="need image"/>
+                        </a>
+                        <span *ngIf="need.image">{{ need.imageContentType }}, {{ byteSize(need.image) }}</span>
+                    </td>
+                    <td>{{ need.quantity }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/need', need.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/need', need.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(need)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="needs && needs.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

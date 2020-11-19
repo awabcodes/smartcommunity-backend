@@ -1,0 +1,90 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="smartcommunityApp.feedback.home.title">Feedbacks</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-feedback" [routerLink]="['/feedback/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="smartcommunityApp.feedback.home.createLabel">
+            Create a new Feedback
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="feedbacks?.length === 0">
+        <span jhiTranslate="smartcommunityApp.feedback.home.notFound">No feedbacks found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="feedbacks && feedbacks.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="title"><span jhiTranslate="smartcommunityApp.feedback.title">Title</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="content"><span jhiTranslate="smartcommunityApp.feedback.content">Content</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="type"><span jhiTranslate="smartcommunityApp.feedback.type">Type</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="status"><span jhiTranslate="smartcommunityApp.feedback.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="creationDate"><span jhiTranslate="smartcommunityApp.feedback.creationDate">Creation Date</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="image"><span jhiTranslate="smartcommunityApp.feedback.image">Image</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="userLogin"><span jhiTranslate="smartcommunityApp.feedback.user">User</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let feedback of feedbacks ;trackBy: trackId">
+                    <td><a [routerLink]="['/feedback', feedback.id, 'view']">{{ feedback.id }}</a></td>
+                    <td>{{ feedback.title }}</td>
+                    <td>{{ feedback.content }}</td>
+                    <td jhiTranslate="{{ 'smartcommunityApp.FeedbackType.' + feedback.type }}">{{ feedback.type }}</td>
+                    <td jhiTranslate="{{ 'smartcommunityApp.FeedbackStatus.' + feedback.status }}">{{ feedback.status }}</td>
+                    <td>{{ feedback.creationDate | date:'medium' }}</td>
+                    <td>
+                        <a *ngIf="feedback.image" (click)="openFile(feedback.imageContentType, feedback.image)">
+                            <img [src]="'data:' + feedback.imageContentType + ';base64,' + feedback.image" style="max-height: 30px;" alt="feedback image"/>
+                        </a>
+                        <span *ngIf="feedback.image">{{ feedback.imageContentType }}, {{ byteSize(feedback.image) }}</span>
+                    </td>
+                    <td>
+                        {{ feedback.userLogin }}
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/feedback', feedback.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/feedback', feedback.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(feedback)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="feedbacks && feedbacks.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

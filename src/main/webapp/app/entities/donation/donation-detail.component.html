@@ -1,0 +1,44 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="donation">
+            <h2><span jhiTranslate="smartcommunityApp.donation.detail.title">Donation</span> {{ donation.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartcommunityApp.donation.amount">Amount</span></dt>
+                <dd>
+                    <span>{{ donation.amount }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.donation.receiptNumber">Receipt Number</span></dt>
+                <dd>
+                    <span>{{ donation.receiptNumber }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.donation.user">User</span></dt>
+                <dd>
+                    {{ donation.userLogin }}
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.donation.request">Request</span></dt>
+                <dd>
+                    <div *ngIf="donation.requestId">
+                        <a [routerLink]="['/donation-request', donation.requestId, 'view']">{{ donation.requestCause }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/donation', donation.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

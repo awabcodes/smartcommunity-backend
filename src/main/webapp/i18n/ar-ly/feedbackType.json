@@ -1,0 +1,9 @@
+{
+  "smartcommunityApp": {
+    "FeedbackType": {
+      "null": "",
+      "NEGATIVE": "NEGATIVE",
+      "POSITIVE": "POSITIVE"
+    }
+  }
+}

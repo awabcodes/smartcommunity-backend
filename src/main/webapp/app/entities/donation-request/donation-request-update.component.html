@@ -1,0 +1,96 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-donation-request-heading" jhiTranslate="smartcommunityApp.donationRequest.home.createOrEditLabel">Create or edit a Donation Request</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartcommunityApp.donationRequest.cause" for="field_cause">Cause</label>
+                    <input type="text" class="form-control" name="cause" id="field_cause"
+                           formControlName="cause"/>
+                    <div *ngIf="editForm.get('cause')!.invalid && (editForm.get('cause')!.dirty || editForm.get('cause')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('cause')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartcommunityApp.donationRequest.paymentInfo" for="field_paymentInfo">Payment Info</label>
+                    <input type="text" class="form-control" name="paymentInfo" id="field_paymentInfo"
+                           formControlName="paymentInfo"/>
+                    <div *ngIf="editForm.get('paymentInfo')!.invalid && (editForm.get('paymentInfo')!.dirty || editForm.get('paymentInfo')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('paymentInfo')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartcommunityApp.donationRequest.info" for="field_info">Info</label>
+                    <input type="text" class="form-control" name="info" id="field_info"
+                           formControlName="info"/>
+                    <div *ngIf="editForm.get('info')!.invalid && (editForm.get('info')!.dirty || editForm.get('info')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('info')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartcommunityApp.donationRequest.totalAmount" for="field_totalAmount">Total Amount</label>
+                    <input type="number" class="form-control" name="totalAmount" id="field_totalAmount"
+                           formControlName="totalAmount"/>
+                    <div *ngIf="editForm.get('totalAmount')!.invalid && (editForm.get('totalAmount')!.dirty || editForm.get('totalAmount')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('totalAmount')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('totalAmount')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartcommunityApp.donationRequest.contact" for="field_contact">Contact</label>
+                    <input type="text" class="form-control" name="contact" id="field_contact"
+                           formControlName="contact"/>
+                    <div *ngIf="editForm.get('contact')!.invalid && (editForm.get('contact')!.dirty || editForm.get('contact')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('contact')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartcommunityApp.donationRequest.amountRaised" for="field_amountRaised">Amount Raised</label>
+                    <input type="number" class="form-control" name="amountRaised" id="field_amountRaised"
+                           formControlName="amountRaised"/>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

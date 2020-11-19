@@ -7,6 +7,15 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
+        "announcement": "Announcement",
+        "need": "Need",
+        "needOrder": "Need Order",
+        "feedback": "Feedback",
+        "donationRequest": "Donation Request",
+        "donation": "Donation",
+        "poll": "Poll",
+        "pollChoice": "Poll Choice",
+        "vote": "Vote",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

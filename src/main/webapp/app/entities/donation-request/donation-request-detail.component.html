@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="donationRequest">
+            <h2><span jhiTranslate="smartcommunityApp.donationRequest.detail.title">Donation Request</span> {{ donationRequest.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartcommunityApp.donationRequest.cause">Cause</span></dt>
+                <dd>
+                    <span>{{ donationRequest.cause }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.donationRequest.paymentInfo">Payment Info</span></dt>
+                <dd>
+                    <span>{{ donationRequest.paymentInfo }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.donationRequest.info">Info</span></dt>
+                <dd>
+                    <span>{{ donationRequest.info }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.donationRequest.totalAmount">Total Amount</span></dt>
+                <dd>
+                    <span>{{ donationRequest.totalAmount }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.donationRequest.contact">Contact</span></dt>
+                <dd>
+                    <span>{{ donationRequest.contact }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.donationRequest.amountRaised">Amount Raised</span></dt>
+                <dd>
+                    <span>{{ donationRequest.amountRaised }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/donation-request', donationRequest.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

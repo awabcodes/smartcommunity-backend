@@ -1,0 +1,24 @@
+{
+  "smartcommunityApp": {
+    "pollChoice": {
+      "home": {
+        "title": "Poll Choices",
+        "createLabel": "Create a new Poll Choice",
+        "createOrEditLabel": "Create or edit a Poll Choice",
+        "notFound": "No Poll Choices found"
+      },
+      "created": "A new Poll Choice is created with identifier {{ param }}",
+      "updated": "A Poll Choice is updated with identifier {{ param }}",
+      "deleted": "A Poll Choice is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Poll Choice {{ id }}?"
+      },
+      "detail": {
+        "title": "Poll Choice"
+      },
+      "choice": "Choice",
+      "votes": "Votes",
+      "poll": "Poll"
+    }
+  }
+}

@@ -7,6 +7,15 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "الكيانات",
+        "announcement": "الإعلانات",
+        "need": "الاحتياجات",
+        "needOrder": "طلبات الاحتياجات",
+        "feedback": "الرسائل",
+        "donationRequest": "طلبات التبرع",
+        "donation": "التبرعات",
+        "poll": "تصويتات",
+        "pollChoice": "اختيارات التصويت",
+        "vote": "التصويت",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

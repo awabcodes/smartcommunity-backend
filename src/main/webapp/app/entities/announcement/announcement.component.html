@@ -1,0 +1,90 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="smartcommunityApp.announcement.home.title">Announcements</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-announcement" [routerLink]="['/announcement/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="smartcommunityApp.announcement.home.createLabel">
+            Create a new Announcement
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="announcements?.length === 0">
+        <span jhiTranslate="smartcommunityApp.announcement.home.notFound">No announcements found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="announcements && announcements.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="title"><span jhiTranslate="smartcommunityApp.announcement.title">Title</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="content"><span jhiTranslate="smartcommunityApp.announcement.content">Content</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="creationDate"><span jhiTranslate="smartcommunityApp.announcement.creationDate">Creation Date</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="type"><span jhiTranslate="smartcommunityApp.announcement.type">Type</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="location"><span jhiTranslate="smartcommunityApp.announcement.location">Location</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="image"><span jhiTranslate="smartcommunityApp.announcement.image">Image</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="contact"><span jhiTranslate="smartcommunityApp.announcement.contact">Contact</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="announcementDate"><span jhiTranslate="smartcommunityApp.announcement.announcementDate">Announcement Date</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let announcement of announcements ;trackBy: trackId">
+                    <td><a [routerLink]="['/announcement', announcement.id, 'view']">{{ announcement.id }}</a></td>
+                    <td>{{ announcement.title }}</td>
+                    <td>{{ announcement.content }}</td>
+                    <td>{{ announcement.creationDate | date:'medium' }}</td>
+                    <td jhiTranslate="{{ 'smartcommunityApp.AnnouncementType.' + announcement.type }}">{{ announcement.type }}</td>
+                    <td>{{ announcement.location }}</td>
+                    <td>
+                        <a *ngIf="announcement.image" (click)="openFile(announcement.imageContentType, announcement.image)">
+                            <img [src]="'data:' + announcement.imageContentType + ';base64,' + announcement.image" style="max-height: 30px;" alt="announcement image"/>
+                        </a>
+                        <span *ngIf="announcement.image">{{ announcement.imageContentType }}, {{ byteSize(announcement.image) }}</span>
+                    </td>
+                    <td>{{ announcement.contact }}</td>
+                    <td>{{ announcement.announcementDate | date:'medium' }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/announcement', announcement.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/announcement', announcement.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(announcement)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="announcements && announcements.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

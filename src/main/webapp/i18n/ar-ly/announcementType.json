@@ -1,0 +1,10 @@
+{
+  "smartcommunityApp": {
+    "AnnouncementType": {
+      "null": "",
+      "NEWS": "NEWS",
+      "EVENT": "EVENT",
+      "OTHER": "OTHER"
+    }
+  }
+}

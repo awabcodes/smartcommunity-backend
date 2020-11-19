@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="poll">
+            <h2><span jhiTranslate="smartcommunityApp.poll.detail.title">Poll</span> {{ poll.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartcommunityApp.poll.question">Question</span></dt>
+                <dd>
+                    <span>{{ poll.question }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.poll.active">Active</span></dt>
+                <dd>
+                    <span>{{ poll.active }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.poll.createdBy">Created By</span></dt>
+                <dd>
+                    <span>{{ poll.createdBy }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.poll.creationDate">Creation Date</span></dt>
+                <dd>
+                    <span>{{ poll.creationDate }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/poll', poll.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

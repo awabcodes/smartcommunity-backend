@@ -1,0 +1,55 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="need">
+            <h2><span jhiTranslate="smartcommunityApp.need.detail.title">Need</span> {{ need.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartcommunityApp.need.name">Name</span></dt>
+                <dd>
+                    <span>{{ need.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.need.info">Info</span></dt>
+                <dd>
+                    <span>{{ need.info }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.need.available">Available</span></dt>
+                <dd>
+                    <span>{{ need.available }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.need.contact">Contact</span></dt>
+                <dd>
+                    <span>{{ need.contact }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.need.image">Image</span></dt>
+                <dd>
+                    <div *ngIf="need.image">
+                        <a (click)="openFile(need.imageContentType, need.image)">
+                            <img [src]="'data:' + need.imageContentType + ';base64,' + need.image" style="max-width: 100%;" alt="need image"/>
+                        </a>
+                        {{ need.imageContentType }}, {{ byteSize(need.image) }}
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.need.quantity">Quantity</span></dt>
+                <dd>
+                    <span>{{ need.quantity }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/need', need.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

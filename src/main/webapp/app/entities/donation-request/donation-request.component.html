@@ -1,0 +1,81 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="smartcommunityApp.donationRequest.home.title">Donation Requests</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-donation-request" [routerLink]="['/donation-request/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="smartcommunityApp.donationRequest.home.createLabel">
+            Create a new Donation Request
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="donationRequests?.length === 0">
+        <span jhiTranslate="smartcommunityApp.donationRequest.home.notFound">No donationRequests found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="donationRequests && donationRequests.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="cause"><span jhiTranslate="smartcommunityApp.donationRequest.cause">Cause</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="paymentInfo"><span jhiTranslate="smartcommunityApp.donationRequest.paymentInfo">Payment Info</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="info"><span jhiTranslate="smartcommunityApp.donationRequest.info">Info</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="totalAmount"><span jhiTranslate="smartcommunityApp.donationRequest.totalAmount">Total Amount</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="contact"><span jhiTranslate="smartcommunityApp.donationRequest.contact">Contact</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="amountRaised"><span jhiTranslate="smartcommunityApp.donationRequest.amountRaised">Amount Raised</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let donationRequest of donationRequests ;trackBy: trackId">
+                    <td><a [routerLink]="['/donation-request', donationRequest.id, 'view']">{{ donationRequest.id }}</a></td>
+                    <td>{{ donationRequest.cause }}</td>
+                    <td>{{ donationRequest.paymentInfo }}</td>
+                    <td>{{ donationRequest.info }}</td>
+                    <td>{{ donationRequest.totalAmount }}</td>
+                    <td>{{ donationRequest.contact }}</td>
+                    <td>{{ donationRequest.amountRaised }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/donation-request', donationRequest.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/donation-request', donationRequest.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(donationRequest)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="donationRequests && donationRequests.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

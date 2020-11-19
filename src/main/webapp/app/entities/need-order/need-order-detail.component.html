@@ -1,0 +1,44 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="needOrder">
+            <h2><span jhiTranslate="smartcommunityApp.needOrder.detail.title">Need Order</span> {{ needOrder.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartcommunityApp.needOrder.quantity">Quantity</span></dt>
+                <dd>
+                    <span>{{ needOrder.quantity }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.needOrder.note">Note</span></dt>
+                <dd>
+                    <span>{{ needOrder.note }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.needOrder.user">User</span></dt>
+                <dd>
+                    {{ needOrder.userLogin }}
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.needOrder.need">Need</span></dt>
+                <dd>
+                    <div *ngIf="needOrder.needId">
+                        <a [routerLink]="['/need', needOrder.needId, 'view']">{{ needOrder.needName }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/need-order', needOrder.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

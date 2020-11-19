@@ -1,0 +1,40 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="vote">
+            <h2><span jhiTranslate="smartcommunityApp.vote.detail.title">Vote</span> {{ vote.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="smartcommunityApp.vote.creationDate">Creation Date</span></dt>
+                <dd>
+                    <span>{{ vote.creationDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.vote.user">User</span></dt>
+                <dd>
+                    {{ vote.userLogin }}
+                </dd>
+                <dt><span jhiTranslate="smartcommunityApp.vote.choice">Choice</span></dt>
+                <dd>
+                    <div *ngIf="vote.choiceId">
+                        <a [routerLink]="['/poll-choice', vote.choiceId, 'view']">{{ vote.choiceChoice }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/vote', vote.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

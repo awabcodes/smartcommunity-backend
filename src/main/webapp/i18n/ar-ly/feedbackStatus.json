@@ -1,0 +1,9 @@
+{
+  "smartcommunityApp": {
+    "FeedbackStatus": {
+      "null": "",
+      "OPEN": "OPEN",
+      "CLOSED": "CLOSED"
+    }
+  }
+}

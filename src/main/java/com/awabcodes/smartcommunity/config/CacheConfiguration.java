@@ -48,6 +48,19 @@ public class CacheConfiguration {
             createCache(cm, com.awabcodes.smartcommunity.domain.User.class.getName());
             createCache(cm, com.awabcodes.smartcommunity.domain.Authority.class.getName());
             createCache(cm, com.awabcodes.smartcommunity.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.awabcodes.smartcommunity.domain.Announcement.class.getName());
+            createCache(cm, com.awabcodes.smartcommunity.domain.Need.class.getName());
+            createCache(cm, com.awabcodes.smartcommunity.domain.Need.class.getName() + ".orders");
+            createCache(cm, com.awabcodes.smartcommunity.domain.NeedOrder.class.getName());
+            createCache(cm, com.awabcodes.smartcommunity.domain.Feedback.class.getName());
+            createCache(cm, com.awabcodes.smartcommunity.domain.DonationRequest.class.getName());
+            createCache(cm, com.awabcodes.smartcommunity.domain.DonationRequest.class.getName() + ".donations");
+            createCache(cm, com.awabcodes.smartcommunity.domain.Donation.class.getName());
+            createCache(cm, com.awabcodes.smartcommunity.domain.Poll.class.getName());
+            createCache(cm, com.awabcodes.smartcommunity.domain.Poll.class.getName() + ".choices");
+            createCache(cm, com.awabcodes.smartcommunity.domain.PollChoice.class.getName());
+            createCache(cm, com.awabcodes.smartcommunity.domain.PollChoice.class.getName() + ".votes");
+            createCache(cm, com.awabcodes.smartcommunity.domain.Vote.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
