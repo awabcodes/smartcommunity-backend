@@ -28,7 +28,6 @@
                     <th scope="col"  jhiSortBy="creationDate"><span jhiTranslate="smartcommunityApp.announcement.creationDate">Creation Date</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="type"><span jhiTranslate="smartcommunityApp.announcement.type">Type</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="location"><span jhiTranslate="smartcommunityApp.announcement.location">Location</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="image"><span jhiTranslate="smartcommunityApp.announcement.image">Image</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="contact"><span jhiTranslate="smartcommunityApp.announcement.contact">Contact</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="announcementDate"><span jhiTranslate="smartcommunityApp.announcement.announcementDate">Announcement Date</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
@@ -42,12 +41,6 @@
                     <td>{{ announcement.creationDate | date:'medium' }}</td>
                     <td jhiTranslate="{{ 'smartcommunityApp.AnnouncementType.' + announcement.type }}">{{ announcement.type }}</td>
                     <td>{{ announcement.location }}</td>
-                    <td>
-                        <a *ngIf="announcement.image" (click)="openFile(announcement.imageContentType, announcement.image)">
-                            <img [src]="'data:' + announcement.imageContentType + ';base64,' + announcement.image" style="max-height: 30px;" alt="announcement image"/>
-                        </a>
-                        <span *ngIf="announcement.image">{{ announcement.imageContentType }}, {{ byteSize(announcement.image) }}</span>
-                    </td>
                     <td>{{ announcement.contact }}</td>
                     <td>{{ announcement.announcementDate | date:'medium' }}</td>
                     <td class="text-right">

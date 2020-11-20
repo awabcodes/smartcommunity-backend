@@ -14,7 +14,8 @@
                 </dd>
                 <dt><span jhiTranslate="smartcommunityApp.poll.active">Active</span></dt>
                 <dd>
-                    <span>{{ poll.active }}</span>
+                    <fa-icon *ngIf="poll.active" icon="check"></fa-icon>
+                    <fa-icon *ngIf="!poll.active" icon="times"></fa-icon>
                 </dd>
                 <dt><span jhiTranslate="smartcommunityApp.poll.createdBy">Created By</span></dt>
                 <dd>

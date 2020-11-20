@@ -27,7 +27,6 @@
                     <th scope="col"  jhiSortBy="info"><span jhiTranslate="smartcommunityApp.need.info">Info</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="available"><span jhiTranslate="smartcommunityApp.need.available">Available</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="contact"><span jhiTranslate="smartcommunityApp.need.contact">Contact</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="image"><span jhiTranslate="smartcommunityApp.need.image">Image</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="quantity"><span jhiTranslate="smartcommunityApp.need.quantity">Quantity</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
@@ -37,14 +36,11 @@
                     <td><a [routerLink]="['/need', need.id, 'view']">{{ need.id }}</a></td>
                     <td>{{ need.name }}</td>
                     <td>{{ need.info }}</td>
-                    <td>{{ need.available }}</td>
-                    <td>{{ need.contact }}</td>
                     <td>
-                        <a *ngIf="need.image" (click)="openFile(need.imageContentType, need.image)">
-                            <img [src]="'data:' + need.imageContentType + ';base64,' + need.image" style="max-height: 30px;" alt="need image"/>
-                        </a>
-                        <span *ngIf="need.image">{{ need.imageContentType }}, {{ byteSize(need.image) }}</span>
+                        <fa-icon *ngIf="need.available" icon="check"></fa-icon>
+                        <fa-icon *ngIf="!need.available" icon="times"></fa-icon>
                     </td>
+                    <td>{{ need.contact }}</td>
                     <td>{{ need.quantity }}</td>
                     <td class="text-right">
                         <div class="btn-group">

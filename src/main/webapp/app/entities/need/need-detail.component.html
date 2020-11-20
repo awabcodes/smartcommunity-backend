@@ -18,7 +18,8 @@
                 </dd>
                 <dt><span jhiTranslate="smartcommunityApp.need.available">Available</span></dt>
                 <dd>
-                    <span>{{ need.available }}</span>
+                    <fa-icon *ngIf="need.available" icon="check"></fa-icon>
+                    <fa-icon *ngIf="!need.available" icon="times"></fa-icon>
                 </dd>
                 <dt><span jhiTranslate="smartcommunityApp.need.contact">Contact</span></dt>
                 <dd>

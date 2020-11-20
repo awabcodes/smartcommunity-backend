@@ -34,7 +34,10 @@
                 <tr *ngFor="let poll of polls ;trackBy: trackId">
                     <td><a [routerLink]="['/poll', poll.id, 'view']">{{ poll.id }}</a></td>
                     <td>{{ poll.question }}</td>
-                    <td>{{ poll.active }}</td>
+                    <td>
+                        <fa-icon *ngIf="poll.active" icon="check"></fa-icon>
+                        <fa-icon *ngIf="!poll.active" icon="times"></fa-icon>
+                    </td>
                     <td>{{ poll.createdBy }}</td>
                     <td>{{ poll.creationDate | date:'medium' }}</td>
                     <td class="text-right">

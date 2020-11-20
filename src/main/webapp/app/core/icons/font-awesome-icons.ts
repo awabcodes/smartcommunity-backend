@@ -42,6 +42,7 @@ import {
   faHandHoldingUsd,
   faClipboardList,
   faAddressCard,
+  faCheck,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const fontAwesomeIcons = [
@@ -88,4 +89,5 @@ export const fontAwesomeIcons = [
   faHandHoldingUsd,
   faClipboardList,
   faAddressCard,
+  faCheck,
 ];
