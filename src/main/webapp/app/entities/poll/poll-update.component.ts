@@ -9,6 +9,8 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IPoll, Poll } from 'app/shared/model/poll.model';
 import { PollService } from './poll.service';
+import { IPollChoice, PollChoice } from 'app/shared/model/poll-choice.model';
+import { PollChoiceService } from '../poll-choice/poll-choice.service';
 
 @Component({
   selector: 'jhi-poll-update',
@@ -25,7 +27,13 @@ export class PollUpdateComponent implements OnInit {
     creationDate: [null, [Validators.required]],
   });
 
-  constructor(protected pollService: PollService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  choiceForm = this.fb.group({
+    id: [],
+    choice: [null, [Validators.required]],
+    pollId: [null],
+  });
+
+  constructor(protected pollService: PollService, protected pollChoiceService: PollChoiceService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ poll }) => {
@@ -75,6 +83,20 @@ export class PollUpdateComponent implements OnInit {
     };
   }
 
+  saveChoice(): void {
+    this.isSaving = true;
+    const pollChoice = this.createChoiceFromForm();
+    this.subscribeToSaveResponse(this.pollChoiceService.create(pollChoice));
+  }
+
+  private createChoiceFromForm(): IPollChoice {
+    return {
+      ...new PollChoice(),
+      choice: this.choiceForm.get(['choice'])!.value,
+      pollId: this.editForm.get(['id'])!.value,
+    };
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IPoll>>): void {
     result.subscribe(
       () => this.onSaveSuccess(),
@@ -84,7 +106,6 @@ export class PollUpdateComponent implements OnInit {
 
   protected onSaveSuccess(): void {
     this.isSaving = false;
-    this.previousState();
   }
 
   protected onSaveError(): void {

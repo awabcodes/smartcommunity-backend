@@ -75,5 +75,33 @@
                 </button>
             </div>
         </form>
+
+        <br> <br>
+
+        <form name="choiceForm" role="form" novalidate (ngSubmit)="saveChoice()" [formGroup]="choiceForm">
+            <h2 id="jhi-poll-choice-heading" jhiTranslate="smartcommunityApp.pollChoice.home.createLabel">Create a new Poll Choice</h2>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="choice" id="field_choice"
+                                formControlName="choice"/>
+                        <div *ngIf="choiceForm.get('choice')!.invalid && (choiceForm.get('choice')!.dirty || choiceForm.get('choice')!.touched)">
+                            <small class="form-text text-danger"
+                                    *ngIf="choiceForm.get('choice')?.errors?.required" jhiTranslate="entity.validation.required">
+                            This field is required.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <button type="submit" id="save-entity" [disabled]="choiceForm.invalid || isSaving" class="btn btn-primary">
+                            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
