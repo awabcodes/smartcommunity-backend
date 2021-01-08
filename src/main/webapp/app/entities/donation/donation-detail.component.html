@@ -16,6 +16,11 @@
                 <dd>
                     <span>{{ donation.receiptNumber }}</span>
                 </dd>
+                <dt><span jhiTranslate="smartcommunityApp.donation.collected">Collected</span></dt>
+                <dd>
+                    <fa-icon *ngIf="donation.collected" icon="check"></fa-icon>
+                    <fa-icon *ngIf="!donation.collected" icon="times"></fa-icon>
+                </dd>
                 <dt><span jhiTranslate="smartcommunityApp.donation.user">User</span></dt>
                 <dd>
                     {{ donation.userLogin }}
@@ -34,6 +39,11 @@
                 <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
             </button>
 
+            <button type="button"
+                    [routerLink]="['/donation', donation.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
         </div>
     </div>
 </div>

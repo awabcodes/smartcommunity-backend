@@ -27,6 +27,8 @@ public class DonationRequestDTO implements Serializable {
 
     private Double amountRaised;
 
+    private Boolean active;
+
     
     public Long getId() {
         return id;
@@ -84,6 +86,14 @@ public class DonationRequestDTO implements Serializable {
         this.amountRaised = amountRaised;
     }
 
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -112,6 +122,7 @@ public class DonationRequestDTO implements Serializable {
             ", totalAmount=" + getTotalAmount() +
             ", contact='" + getContact() + "'" +
             ", amountRaised=" + getAmountRaised() +
+            ", active='" + isActive() + "'" +
             "}";
     }
 }

@@ -29,6 +29,7 @@
                     <th scope="col"  jhiSortBy="totalAmount"><span jhiTranslate="smartcommunityApp.donationRequest.totalAmount">Total Amount</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="contact"><span jhiTranslate="smartcommunityApp.donationRequest.contact">Contact</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="amountRaised"><span jhiTranslate="smartcommunityApp.donationRequest.amountRaised">Amount Raised</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="active"><span jhiTranslate="smartcommunityApp.donationRequest.active">Active</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -41,6 +42,10 @@
                     <td>{{ donationRequest.totalAmount }}</td>
                     <td>{{ donationRequest.contact }}</td>
                     <td>{{ donationRequest.amountRaised }}</td>
+                    <td>
+                        <fa-icon *ngIf="donationRequest.active" icon="check"></fa-icon>
+                        <fa-icon *ngIf="!donationRequest.active" icon="times"></fa-icon>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

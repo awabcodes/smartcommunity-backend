@@ -9,6 +9,10 @@
     {
       "fieldName": "receiptNumber",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "collected",
+      "fieldType": "Boolean"
     }
   ],
   "relationships": [

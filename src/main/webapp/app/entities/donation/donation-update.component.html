@@ -34,6 +34,12 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartcommunityApp.donation.collected" for="field_collected">Collected</label>
+                    <input type="checkbox" class="form-control" name="collected" id="field_collected"
+                           formControlName="collected"/>
+                </div>
+
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="smartcommunityApp.donation.user" for="field_user">User</label>
                     <select class="form-control" id="field_user" name="user" formControlName="userId">
                         <option *ngIf="!editForm.get('userId')!.value" [ngValue]="null" selected></option>

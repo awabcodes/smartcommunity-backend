@@ -1,6 +1,13 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="smartcommunityApp.donation.home.title">Donations</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-donation" [routerLink]="['/donation/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="smartcommunityApp.donation.home.createLabel">
+            Create a new Donation
+            </span>
+        </button>
     </h2>
 
     <jhi-alert-error></jhi-alert-error>
@@ -18,6 +25,7 @@
                     <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="amount"><span jhiTranslate="smartcommunityApp.donation.amount">Amount</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="receiptNumber"><span jhiTranslate="smartcommunityApp.donation.receiptNumber">Receipt Number</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="collected"><span jhiTranslate="smartcommunityApp.donation.collected">Collected</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="userLogin"><span jhiTranslate="smartcommunityApp.donation.user">User</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="requestCause"><span jhiTranslate="smartcommunityApp.donation.request">Request</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
@@ -28,6 +36,10 @@
                     <td><a [routerLink]="['/donation', donation.id, 'view']">{{ donation.id }}</a></td>
                     <td>{{ donation.amount }}</td>
                     <td>{{ donation.receiptNumber }}</td>
+                    <td>
+                        <fa-icon *ngIf="donation.collected" icon="check"></fa-icon>
+                        <fa-icon *ngIf="!donation.collected" icon="times"></fa-icon>
+                    </td>
                     <td>
                         {{ donation.userLogin }}
                     </td>
@@ -43,6 +55,19 @@
                                     class="btn btn-info btn-sm">
                                 <fa-icon icon="eye"></fa-icon>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/donation', donation.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(donation)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                             </button>
                         </div>
                     </td>

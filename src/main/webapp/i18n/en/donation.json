@@ -18,6 +18,7 @@
       },
       "amount": "Amount",
       "receiptNumber": "Receipt Number",
+      "collected": "Collected",
       "user": "User",
       "request": "Request"
     }

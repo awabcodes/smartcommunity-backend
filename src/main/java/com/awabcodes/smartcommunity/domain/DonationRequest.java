@@ -47,6 +47,9 @@ public class DonationRequest implements Serializable {
     @Column(name = "amount_raised")
     private Double amountRaised;
 
+    @Column(name = "active")
+    private Boolean active;
+
     @OneToMany(mappedBy = "request")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Donation> donations = new HashSet<>();
@@ -138,6 +141,19 @@ public class DonationRequest implements Serializable {
         this.amountRaised = amountRaised;
     }
 
+    public Boolean isActive() {
+        return active;
+    }
+
+    public DonationRequest active(Boolean active) {
+        this.active = active;
+        return this;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     public Set<Donation> getDonations() {
         return donations;
     }
@@ -191,6 +207,7 @@ public class DonationRequest implements Serializable {
             ", totalAmount=" + getTotalAmount() +
             ", contact='" + getContact() + "'" +
             ", amountRaised=" + getAmountRaised() +
+            ", active='" + isActive() + "'" +
             "}";
     }
 }

@@ -23,6 +23,7 @@ export class DonationRequestUpdateComponent implements OnInit {
     totalAmount: [null, [Validators.required]],
     contact: [null, [Validators.required]],
     amountRaised: [],
+    active: [],
   });
 
   constructor(
@@ -46,6 +47,7 @@ export class DonationRequestUpdateComponent implements OnInit {
       totalAmount: donationRequest.totalAmount,
       contact: donationRequest.contact,
       amountRaised: donationRequest.amountRaised,
+      active: donationRequest.active,
     });
   }
 
@@ -73,6 +75,7 @@ export class DonationRequestUpdateComponent implements OnInit {
       totalAmount: this.editForm.get(['totalAmount'])!.value,
       contact: this.editForm.get(['contact'])!.value,
       amountRaised: this.editForm.get(['amountRaised'])!.value,
+      active: this.editForm.get(['active'])!.value,
     };
   }
 

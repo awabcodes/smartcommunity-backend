@@ -8,6 +8,7 @@ export interface IDonationRequest {
   totalAmount?: number;
   contact?: string;
   amountRaised?: number;
+  active?: boolean;
   donations?: IDonation[];
 }
 
@@ -20,6 +21,9 @@ export class DonationRequest implements IDonationRequest {
     public totalAmount?: number,
     public contact?: string,
     public amountRaised?: number,
+    public active?: boolean,
     public donations?: IDonation[]
-  ) {}
+  ) {
+    this.active = this.active || false;
+  }
 }

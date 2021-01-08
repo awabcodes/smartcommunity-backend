@@ -15,6 +15,8 @@ public class DonationDTO implements Serializable {
 
     private String receiptNumber;
 
+    private Boolean collected;
+
 
     private Long userId;
 
@@ -46,6 +48,14 @@ public class DonationDTO implements Serializable {
 
     public void setReceiptNumber(String receiptNumber) {
         this.receiptNumber = receiptNumber;
+    }
+
+    public Boolean isCollected() {
+        return collected;
+    }
+
+    public void setCollected(Boolean collected) {
+        this.collected = collected;
     }
 
     public Long getUserId() {
@@ -104,6 +114,7 @@ public class DonationDTO implements Serializable {
             "id=" + getId() +
             ", amount=" + getAmount() +
             ", receiptNumber='" + getReceiptNumber() + "'" +
+            ", collected='" + isCollected() + "'" +
             ", userId=" + getUserId() +
             ", userLogin='" + getUserLogin() + "'" +
             ", requestId=" + getRequestId() +

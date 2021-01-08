@@ -27,6 +27,7 @@ export class DonationUpdateComponent implements OnInit {
     id: [],
     amount: [null, [Validators.required]],
     receiptNumber: [],
+    collected: [],
     userId: [null, Validators.required],
     requestId: [null, Validators.required],
   });
@@ -54,6 +55,7 @@ export class DonationUpdateComponent implements OnInit {
       id: donation.id,
       amount: donation.amount,
       receiptNumber: donation.receiptNumber,
+      collected: donation.collected,
       userId: donation.userId,
       requestId: donation.requestId,
     });
@@ -79,6 +81,7 @@ export class DonationUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       amount: this.editForm.get(['amount'])!.value,
       receiptNumber: this.editForm.get(['receiptNumber'])!.value,
+      collected: this.editForm.get(['collected'])!.value,
       userId: this.editForm.get(['userId'])!.value,
       requestId: this.editForm.get(['requestId'])!.value,
     };

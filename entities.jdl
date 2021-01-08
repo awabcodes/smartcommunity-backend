@@ -55,6 +55,7 @@ entity DonationRequest {
     totalAmount Double required
     contact String required
     amountRaised Double
+    active Boolean
 }
 
 entity Donation {
@@ -62,6 +63,7 @@ entity Donation {
     // DonationRequest
     amount Double required
     receiptNumber String
+    collected Boolean
 }
 
 entity Poll {

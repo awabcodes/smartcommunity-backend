@@ -20,7 +20,7 @@ describe('Service Tests', () => {
       service = injector.get(DonationRequestService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new DonationRequest(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 0, 'AAAAAAA', 0);
+      elemDefault = new DonationRequest(0, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', 0, 'AAAAAAA', 0, false);
     });
 
     describe('Service methods', () => {
@@ -60,6 +60,7 @@ describe('Service Tests', () => {
             totalAmount: 1,
             contact: 'BBBBBB',
             amountRaised: 1,
+            active: true,
           },
           elemDefault
         );
@@ -82,6 +83,7 @@ describe('Service Tests', () => {
             totalAmount: 1,
             contact: 'BBBBBB',
             amountRaised: 1,
+            active: true,
           },
           elemDefault
         );

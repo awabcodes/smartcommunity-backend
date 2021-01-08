@@ -40,6 +40,9 @@ public class DonationResourceIT {
     private static final String DEFAULT_RECEIPT_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_RECEIPT_NUMBER = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_COLLECTED = false;
+    private static final Boolean UPDATED_COLLECTED = true;
+
     @Autowired
     private DonationRepository donationRepository;
 
@@ -66,7 +69,8 @@ public class DonationResourceIT {
     public static Donation createEntity(EntityManager em) {
         Donation donation = new Donation()
             .amount(DEFAULT_AMOUNT)
-            .receiptNumber(DEFAULT_RECEIPT_NUMBER);
+            .receiptNumber(DEFAULT_RECEIPT_NUMBER)
+            .collected(DEFAULT_COLLECTED);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
@@ -93,7 +97,8 @@ public class DonationResourceIT {
     public static Donation createUpdatedEntity(EntityManager em) {
         Donation donation = new Donation()
             .amount(UPDATED_AMOUNT)
-            .receiptNumber(UPDATED_RECEIPT_NUMBER);
+            .receiptNumber(UPDATED_RECEIPT_NUMBER)
+            .collected(UPDATED_COLLECTED);
         // Add required entity
         User user = UserResourceIT.createEntity(em);
         em.persist(user);
@@ -134,6 +139,7 @@ public class DonationResourceIT {
         Donation testDonation = donationList.get(donationList.size() - 1);
         assertThat(testDonation.getAmount()).isEqualTo(DEFAULT_AMOUNT);
         assertThat(testDonation.getReceiptNumber()).isEqualTo(DEFAULT_RECEIPT_NUMBER);
+        assertThat(testDonation.isCollected()).isEqualTo(DEFAULT_COLLECTED);
     }
 
     @Test
@@ -189,7 +195,8 @@ public class DonationResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(donation.getId().intValue())))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())))
-            .andExpect(jsonPath("$.[*].receiptNumber").value(hasItem(DEFAULT_RECEIPT_NUMBER)));
+            .andExpect(jsonPath("$.[*].receiptNumber").value(hasItem(DEFAULT_RECEIPT_NUMBER)))
+            .andExpect(jsonPath("$.[*].collected").value(hasItem(DEFAULT_COLLECTED.booleanValue())));
     }
     
     @Test
@@ -204,7 +211,8 @@ public class DonationResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(donation.getId().intValue()))
             .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.doubleValue()))
-            .andExpect(jsonPath("$.receiptNumber").value(DEFAULT_RECEIPT_NUMBER));
+            .andExpect(jsonPath("$.receiptNumber").value(DEFAULT_RECEIPT_NUMBER))
+            .andExpect(jsonPath("$.collected").value(DEFAULT_COLLECTED.booleanValue()));
     }
     @Test
     @Transactional
@@ -228,7 +236,8 @@ public class DonationResourceIT {
         em.detach(updatedDonation);
         updatedDonation
             .amount(UPDATED_AMOUNT)
-            .receiptNumber(UPDATED_RECEIPT_NUMBER);
+            .receiptNumber(UPDATED_RECEIPT_NUMBER)
+            .collected(UPDATED_COLLECTED);
         DonationDTO donationDTO = donationMapper.toDto(updatedDonation);
 
         restDonationMockMvc.perform(put("/api/donations")
@@ -242,6 +251,7 @@ public class DonationResourceIT {
         Donation testDonation = donationList.get(donationList.size() - 1);
         assertThat(testDonation.getAmount()).isEqualTo(UPDATED_AMOUNT);
         assertThat(testDonation.getReceiptNumber()).isEqualTo(UPDATED_RECEIPT_NUMBER);
+        assertThat(testDonation.isCollected()).isEqualTo(UPDATED_COLLECTED);
     }
 
     @Test

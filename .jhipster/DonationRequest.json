@@ -29,6 +29,10 @@
     {
       "fieldName": "amountRaised",
       "fieldType": "Double"
+    },
+    {
+      "fieldName": "active",
+      "fieldType": "Boolean"
     }
   ],
   "relationships": [

@@ -30,6 +30,9 @@ public class Donation implements Serializable {
     @Column(name = "receipt_number")
     private String receiptNumber;
 
+    @Column(name = "collected")
+    private Boolean collected;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = "donations", allowSetters = true)
@@ -73,6 +76,19 @@ public class Donation implements Serializable {
 
     public void setReceiptNumber(String receiptNumber) {
         this.receiptNumber = receiptNumber;
+    }
+
+    public Boolean isCollected() {
+        return collected;
+    }
+
+    public Donation collected(Boolean collected) {
+        this.collected = collected;
+        return this;
+    }
+
+    public void setCollected(Boolean collected) {
+        this.collected = collected;
     }
 
     public User getUser() {
@@ -125,6 +141,7 @@ public class Donation implements Serializable {
             "id=" + getId() +
             ", amount=" + getAmount() +
             ", receiptNumber='" + getReceiptNumber() + "'" +
+            ", collected='" + isCollected() + "'" +
             "}";
     }
 }

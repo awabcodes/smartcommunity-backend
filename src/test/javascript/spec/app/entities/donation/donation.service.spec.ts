@@ -20,7 +20,7 @@ describe('Service Tests', () => {
       service = injector.get(DonationService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Donation(0, 0, 'AAAAAAA');
+      elemDefault = new Donation(0, 0, 'AAAAAAA', false);
     });
 
     describe('Service methods', () => {
@@ -56,6 +56,7 @@ describe('Service Tests', () => {
           {
             amount: 1,
             receiptNumber: 'BBBBBB',
+            collected: true,
           },
           elemDefault
         );
@@ -74,6 +75,7 @@ describe('Service Tests', () => {
           {
             amount: 1,
             receiptNumber: 'BBBBBB',
+            collected: true,
           },
           elemDefault
         );

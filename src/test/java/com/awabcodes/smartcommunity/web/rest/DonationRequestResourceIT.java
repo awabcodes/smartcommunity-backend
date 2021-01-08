@@ -50,6 +50,9 @@ public class DonationRequestResourceIT {
     private static final Double DEFAULT_AMOUNT_RAISED = 1D;
     private static final Double UPDATED_AMOUNT_RAISED = 2D;
 
+    private static final Boolean DEFAULT_ACTIVE = false;
+    private static final Boolean UPDATED_ACTIVE = true;
+
     @Autowired
     private DonationRequestRepository donationRequestRepository;
 
@@ -80,7 +83,8 @@ public class DonationRequestResourceIT {
             .info(DEFAULT_INFO)
             .totalAmount(DEFAULT_TOTAL_AMOUNT)
             .contact(DEFAULT_CONTACT)
-            .amountRaised(DEFAULT_AMOUNT_RAISED);
+            .amountRaised(DEFAULT_AMOUNT_RAISED)
+            .active(DEFAULT_ACTIVE);
         return donationRequest;
     }
     /**
@@ -96,7 +100,8 @@ public class DonationRequestResourceIT {
             .info(UPDATED_INFO)
             .totalAmount(UPDATED_TOTAL_AMOUNT)
             .contact(UPDATED_CONTACT)
-            .amountRaised(UPDATED_AMOUNT_RAISED);
+            .amountRaised(UPDATED_AMOUNT_RAISED)
+            .active(UPDATED_ACTIVE);
         return donationRequest;
     }
 
@@ -126,6 +131,7 @@ public class DonationRequestResourceIT {
         assertThat(testDonationRequest.getTotalAmount()).isEqualTo(DEFAULT_TOTAL_AMOUNT);
         assertThat(testDonationRequest.getContact()).isEqualTo(DEFAULT_CONTACT);
         assertThat(testDonationRequest.getAmountRaised()).isEqualTo(DEFAULT_AMOUNT_RAISED);
+        assertThat(testDonationRequest.isActive()).isEqualTo(DEFAULT_ACTIVE);
     }
 
     @Test
@@ -265,7 +271,8 @@ public class DonationRequestResourceIT {
             .andExpect(jsonPath("$.[*].info").value(hasItem(DEFAULT_INFO)))
             .andExpect(jsonPath("$.[*].totalAmount").value(hasItem(DEFAULT_TOTAL_AMOUNT.doubleValue())))
             .andExpect(jsonPath("$.[*].contact").value(hasItem(DEFAULT_CONTACT)))
-            .andExpect(jsonPath("$.[*].amountRaised").value(hasItem(DEFAULT_AMOUNT_RAISED.doubleValue())));
+            .andExpect(jsonPath("$.[*].amountRaised").value(hasItem(DEFAULT_AMOUNT_RAISED.doubleValue())))
+            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())));
     }
     
     @Test
@@ -284,7 +291,8 @@ public class DonationRequestResourceIT {
             .andExpect(jsonPath("$.info").value(DEFAULT_INFO))
             .andExpect(jsonPath("$.totalAmount").value(DEFAULT_TOTAL_AMOUNT.doubleValue()))
             .andExpect(jsonPath("$.contact").value(DEFAULT_CONTACT))
-            .andExpect(jsonPath("$.amountRaised").value(DEFAULT_AMOUNT_RAISED.doubleValue()));
+            .andExpect(jsonPath("$.amountRaised").value(DEFAULT_AMOUNT_RAISED.doubleValue()))
+            .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE.booleanValue()));
     }
     @Test
     @Transactional
@@ -312,7 +320,8 @@ public class DonationRequestResourceIT {
             .info(UPDATED_INFO)
             .totalAmount(UPDATED_TOTAL_AMOUNT)
             .contact(UPDATED_CONTACT)
-            .amountRaised(UPDATED_AMOUNT_RAISED);
+            .amountRaised(UPDATED_AMOUNT_RAISED)
+            .active(UPDATED_ACTIVE);
         DonationRequestDTO donationRequestDTO = donationRequestMapper.toDto(updatedDonationRequest);
 
         restDonationRequestMockMvc.perform(put("/api/donation-requests")
@@ -330,6 +339,7 @@ public class DonationRequestResourceIT {
         assertThat(testDonationRequest.getTotalAmount()).isEqualTo(UPDATED_TOTAL_AMOUNT);
         assertThat(testDonationRequest.getContact()).isEqualTo(UPDATED_CONTACT);
         assertThat(testDonationRequest.getAmountRaised()).isEqualTo(UPDATED_AMOUNT_RAISED);
+        assertThat(testDonationRequest.isActive()).isEqualTo(UPDATED_ACTIVE);
     }
 
     @Test

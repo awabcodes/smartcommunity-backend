@@ -32,6 +32,11 @@
                 <dd>
                     <span>{{ donationRequest.amountRaised }}</span>
                 </dd>
+                <dt><span jhiTranslate="smartcommunityApp.donationRequest.active">Active</span></dt>
+                <dd>
+                    <fa-icon *ngIf="donationRequest.active" icon="check"></fa-icon>
+                    <fa-icon *ngIf="!donationRequest.active" icon="times"></fa-icon>
+                </dd>
             </dl>
 
             <button type="submit"
