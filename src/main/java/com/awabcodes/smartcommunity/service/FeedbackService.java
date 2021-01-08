@@ -1,6 +1,7 @@
 package com.awabcodes.smartcommunity.service;
 
 import com.awabcodes.smartcommunity.domain.Feedback;
+import com.awabcodes.smartcommunity.domain.User;
 import com.awabcodes.smartcommunity.repository.FeedbackRepository;
 import com.awabcodes.smartcommunity.service.dto.FeedbackDTO;
 import com.awabcodes.smartcommunity.service.mapper.FeedbackMapper;
@@ -27,9 +28,12 @@ public class FeedbackService {
 
     private final FeedbackMapper feedbackMapper;
 
-    public FeedbackService(FeedbackRepository feedbackRepository, FeedbackMapper feedbackMapper) {
+    private final UserService userService;
+
+    public FeedbackService(FeedbackRepository feedbackRepository, FeedbackMapper feedbackMapper, UserService userService) {
         this.feedbackRepository = feedbackRepository;
         this.feedbackMapper = feedbackMapper;
+        this.userService = userService;
     }
 
     /**
@@ -55,6 +59,14 @@ public class FeedbackService {
     public Page<FeedbackDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Feedbacks");
         return feedbackRepository.findAll(pageable)
+            .map(feedbackMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<FeedbackDTO> findAllByUser(Pageable pageable) {
+        log.debug("Request to get all Feedbacks");
+        Optional<User> currentUser = userService.getUserWithAuthorities();
+        return feedbackRepository.findAllByUserId(pageable, currentUser.get().getId())
             .map(feedbackMapper::toDto);
     }
 

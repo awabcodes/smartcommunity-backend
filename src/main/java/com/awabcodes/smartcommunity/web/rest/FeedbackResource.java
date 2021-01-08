@@ -98,6 +98,14 @@ public class FeedbackResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/feedbacks/user")
+    public ResponseEntity<List<FeedbackDTO>> getAllFeedbacksByUser(Pageable pageable) {
+        log.debug("REST request to get a page of Feedbacks");
+        Page<FeedbackDTO> page = feedbackService.findAllByUser(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     /**
      * {@code GET  /feedbacks/:id} : get the "id" feedback.
      *
