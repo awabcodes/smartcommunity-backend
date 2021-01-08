@@ -99,6 +99,10 @@ relationship ManyToOne {
     Vote{user(login) required} to User
 }
 
+relationship ManyToMany {
+	Poll{users(login)} to User
+}
+
 paginate all with pagination
 
 dto * with mapstruct

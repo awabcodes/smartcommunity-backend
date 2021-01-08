@@ -45,6 +45,13 @@ public class Poll implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<PollChoice> choices = new HashSet<>();
 
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JoinTable(name = "poll_users",
+               joinColumns = @JoinColumn(name = "poll_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "users_id", referencedColumnName = "id"))
+    private Set<User> users = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -129,6 +136,29 @@ public class Poll implements Serializable {
 
     public void setChoices(Set<PollChoice> pollChoices) {
         this.choices = pollChoices;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public Poll users(Set<User> users) {
+        this.users = users;
+        return this;
+    }
+
+    public Poll addUsers(User user) {
+        this.users.add(user);
+        return this;
+    }
+
+    public Poll removeUsers(User user) {
+        this.users.remove(user);
+        return this;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

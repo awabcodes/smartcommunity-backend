@@ -88,12 +88,18 @@ public class PollResource {
      * {@code GET  /polls} : get all the polls.
      *
      * @param pageable the pagination information.
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of polls in body.
      */
     @GetMapping("/polls")
-    public ResponseEntity<List<PollDTO>> getAllPolls(Pageable pageable) {
+    public ResponseEntity<List<PollDTO>> getAllPolls(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get a page of Polls");
-        Page<PollDTO> page = pollService.findAll(pageable);
+        Page<PollDTO> page;
+        if (eagerload) {
+            page = pollService.findAllWithEagerRelationships(pageable);
+        } else {
+            page = pollService.findAll(pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -117,7 +123,7 @@ public class PollResource {
         Optional<PollDTO> pollDTO = pollService.findOneByVote(id);
         return ResponseUtil.wrapOrNotFound(pollDTO);
     }
-
+    
     /**
      * {@code DELETE  /polls/:id} : delete the "id" poll.
      *

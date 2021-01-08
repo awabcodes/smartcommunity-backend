@@ -25,6 +25,12 @@
                 <dd>
                     <span>{{ poll.creationDate }}</span>
                 </dd>
+                <dt><span jhiTranslate="smartcommunityApp.poll.users">Users</span></dt>
+                <dd>
+                    <span *ngFor="let users of poll.users; let last = last">
+                        {{ users.login }}{{ last ? '' : ', ' }}
+                    </span>
+                </dd>
             </dl>
 
             <button type="submit"

@@ -10,9 +10,14 @@ import com.awabcodes.smartcommunity.service.mapper.PollMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,10 +25,12 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -31,6 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link PollResource} REST controller.
  */
 @SpringBootTest(classes = SmartcommunityApp.class)
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 public class PollResourceIT {
@@ -50,8 +58,14 @@ public class PollResourceIT {
     @Autowired
     private PollRepository pollRepository;
 
+    @Mock
+    private PollRepository pollRepositoryMock;
+
     @Autowired
     private PollMapper pollMapper;
+
+    @Mock
+    private PollService pollServiceMock;
 
     @Autowired
     private PollService pollService;
@@ -257,6 +271,26 @@ public class PollResourceIT {
             .andExpect(jsonPath("$.[*].creationDate").value(hasItem(DEFAULT_CREATION_DATE.toString())));
     }
     
+    @SuppressWarnings({"unchecked"})
+    public void getAllPollsWithEagerRelationshipsIsEnabled() throws Exception {
+        when(pollServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restPollMockMvc.perform(get("/api/polls?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(pollServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllPollsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(pollServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restPollMockMvc.perform(get("/api/polls?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(pollServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getPoll() throws Exception {

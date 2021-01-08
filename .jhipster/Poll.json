@@ -29,6 +29,14 @@
       "otherEntityRelationshipName": "poll",
       "relationshipValidateRules": "required",
       "relationshipName": "choices"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "poll",
+      "relationshipName": "users",
+      "otherEntityField": "login",
+      "ownerSide": true
     }
   ],
   "changelogDate": "20201119173705",

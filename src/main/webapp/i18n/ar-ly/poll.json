@@ -20,7 +20,8 @@
       "active": "Active",
       "createdBy": "Created By",
       "creationDate": "Creation Date",
-      "choices": "Choices"
+      "choices": "Choices",
+      "users": "Users"
     }
   }
 }

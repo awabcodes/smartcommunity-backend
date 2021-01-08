@@ -1,5 +1,6 @@
 import { Moment } from 'moment';
 import { IPollChoice } from 'app/shared/model/poll-choice.model';
+import { IUser } from 'app/core/user/user.model';
 
 export interface IPoll {
   id?: number;
@@ -8,6 +9,7 @@ export interface IPoll {
   createdBy?: string;
   creationDate?: Moment;
   choices?: IPollChoice[];
+  users?: IUser[];
 }
 
 export class Poll implements IPoll {
@@ -17,7 +19,8 @@ export class Poll implements IPoll {
     public active?: boolean,
     public createdBy?: string,
     public creationDate?: Moment,
-    public choices?: IPollChoice[]
+    public choices?: IPollChoice[],
+    public users?: IUser[]
   ) {
     this.active = this.active || false;
   }

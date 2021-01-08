@@ -9,12 +9,13 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Poll} and its DTO {@link PollDTO}.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = {UserMapper.class})
 public interface PollMapper extends EntityMapper<PollDTO, Poll> {
 
 
     @Mapping(target = "choices", ignore = true)
     @Mapping(target = "removeChoices", ignore = true)
+    @Mapping(target = "removeUsers", ignore = true)
     Poll toEntity(PollDTO pollDTO);
 
     default Poll fromId(Long id) {

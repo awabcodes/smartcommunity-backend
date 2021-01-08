@@ -61,6 +61,7 @@ public class CacheConfiguration {
             createCache(cm, com.awabcodes.smartcommunity.domain.PollChoice.class.getName());
             createCache(cm, com.awabcodes.smartcommunity.domain.PollChoice.class.getName() + ".votes");
             createCache(cm, com.awabcodes.smartcommunity.domain.Vote.class.getName());
+            createCache(cm, com.awabcodes.smartcommunity.domain.Poll.class.getName() + ".users");
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -3,6 +3,8 @@ package com.awabcodes.smartcommunity.service.dto;
 import java.time.Instant;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A DTO for the {@link com.awabcodes.smartcommunity.domain.Poll} entity.
@@ -23,6 +25,7 @@ public class PollDTO implements Serializable {
     @NotNull
     private Instant creationDate;
 
+    private Set<UserDTO> users = new HashSet<>();
     
     public Long getId() {
         return id;
@@ -64,6 +67,14 @@ public class PollDTO implements Serializable {
         this.creationDate = creationDate;
     }
 
+    public Set<UserDTO> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<UserDTO> users) {
+        this.users = users;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -90,6 +101,7 @@ public class PollDTO implements Serializable {
             ", active='" + isActive() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", creationDate='" + getCreationDate() + "'" +
+            ", users='" + getUsers() + "'" +
             "}";
     }
 }

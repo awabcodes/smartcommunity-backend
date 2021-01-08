@@ -11,6 +11,8 @@ import { IPoll, Poll } from 'app/shared/model/poll.model';
 import { PollService } from './poll.service';
 import { IPollChoice, PollChoice } from 'app/shared/model/poll-choice.model';
 import { PollChoiceService } from '../poll-choice/poll-choice.service';
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
 
 @Component({
   selector: 'jhi-poll-update',
@@ -18,6 +20,7 @@ import { PollChoiceService } from '../poll-choice/poll-choice.service';
 })
 export class PollUpdateComponent implements OnInit {
   isSaving = false;
+  users: IUser[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -25,6 +28,7 @@ export class PollUpdateComponent implements OnInit {
     active: [null, [Validators.required]],
     createdBy: [null, [Validators.required]],
     creationDate: [null, [Validators.required]],
+    users: [],
   });
 
   choiceForm = this.fb.group({
@@ -33,7 +37,13 @@ export class PollUpdateComponent implements OnInit {
     pollId: [null],
   });
 
-  constructor(protected pollService: PollService, protected pollChoiceService: PollChoiceService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected pollService: PollService,
+    protected pollChoiceService: PollChoiceService,
+    protected userService: UserService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ poll }) => {
@@ -43,6 +53,8 @@ export class PollUpdateComponent implements OnInit {
       }
 
       this.updateForm(poll);
+
+      this.userService.query().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
     });
   }
 
@@ -53,6 +65,7 @@ export class PollUpdateComponent implements OnInit {
       active: poll.active,
       createdBy: poll.createdBy,
       creationDate: poll.creationDate ? poll.creationDate.format(DATE_TIME_FORMAT) : null,
+      users: poll.users,
     });
   }
 
@@ -80,6 +93,7 @@ export class PollUpdateComponent implements OnInit {
       creationDate: this.editForm.get(['creationDate'])!.value
         ? moment(this.editForm.get(['creationDate'])!.value, DATE_TIME_FORMAT)
         : undefined,
+      users: this.editForm.get(['users'])!.value,
     };
   }
 
@@ -110,5 +124,20 @@ export class PollUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  trackById(index: number, item: IUser): any {
+    return item.id;
+  }
+
+  getSelected(selectedVals: IUser[], option: IUser): IUser {
+    if (selectedVals) {
+      for (let i = 0; i < selectedVals.length; i++) {
+        if (option.id === selectedVals[i].id) {
+          return selectedVals[i];
+        }
+      }
+    }
+    return option;
   }
 }

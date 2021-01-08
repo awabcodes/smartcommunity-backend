@@ -65,6 +65,15 @@ public class PollService {
 
 
     /**
+     * Get all the polls with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<PollDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return pollRepository.findAllWithEagerRelationships(pageable).map(pollMapper::toDto);
+    }
+
+    /**
      * Get one poll by id.
      *
      * @param id the id of the entity.
@@ -73,7 +82,7 @@ public class PollService {
     @Transactional(readOnly = true)
     public Optional<PollDTO> findOne(Long id) {
         log.debug("Request to get Poll : {}", id);
-        return pollRepository.findById(id)
+        return pollRepository.findOneWithEagerRelationships(id)
             .map(pollMapper::toDto);
     }
 
