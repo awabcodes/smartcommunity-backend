@@ -2,6 +2,8 @@ package com.awabcodes.smartcommunity.service;
 
 import com.awabcodes.smartcommunity.domain.Donation;
 import com.awabcodes.smartcommunity.repository.DonationRepository;
+import com.awabcodes.smartcommunity.security.AuthoritiesConstants;
+import com.awabcodes.smartcommunity.security.SecurityUtils;
 import com.awabcodes.smartcommunity.service.dto.DonationDTO;
 import com.awabcodes.smartcommunity.service.mapper.DonationMapper;
 import org.slf4j.Logger;
@@ -54,7 +56,13 @@ public class DonationService {
     @Transactional(readOnly = true)
     public Page<DonationDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Donations");
-        return donationRepository.findAll(pageable)
+
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            return donationRepository.findAll(pageable)
+                .map(donationMapper::toDto);
+        }
+
+        return donationRepository.findAllByUserLogin(pageable, SecurityUtils.getCurrentUserLogin().get())
             .map(donationMapper::toDto);
     }
 
@@ -68,7 +76,13 @@ public class DonationService {
     @Transactional(readOnly = true)
     public Optional<DonationDTO> findOne(Long id) {
         log.debug("Request to get Donation : {}", id);
-        return donationRepository.findById(id)
+
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            return donationRepository.findById(id)
+                .map(donationMapper::toDto);
+        }
+
+        return donationRepository.findByIdAndUserLogin(id, SecurityUtils.getCurrentUserLogin().get())
             .map(donationMapper::toDto);
     }
 

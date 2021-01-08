@@ -2,6 +2,8 @@ package com.awabcodes.smartcommunity.service;
 
 import com.awabcodes.smartcommunity.domain.NeedOrder;
 import com.awabcodes.smartcommunity.repository.NeedOrderRepository;
+import com.awabcodes.smartcommunity.security.AuthoritiesConstants;
+import com.awabcodes.smartcommunity.security.SecurityUtils;
 import com.awabcodes.smartcommunity.service.dto.NeedOrderDTO;
 import com.awabcodes.smartcommunity.service.mapper.NeedOrderMapper;
 import org.slf4j.Logger;
@@ -54,7 +56,13 @@ public class NeedOrderService {
     @Transactional(readOnly = true)
     public Page<NeedOrderDTO> findAll(Pageable pageable) {
         log.debug("Request to get all NeedOrders");
-        return needOrderRepository.findAll(pageable)
+
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            return needOrderRepository.findAll(pageable)
+                .map(needOrderMapper::toDto);
+        }
+
+        return needOrderRepository.findAllByUserLogin(pageable, SecurityUtils.getCurrentUserLogin().get())
             .map(needOrderMapper::toDto);
     }
 
@@ -68,7 +76,13 @@ public class NeedOrderService {
     @Transactional(readOnly = true)
     public Optional<NeedOrderDTO> findOne(Long id) {
         log.debug("Request to get NeedOrder : {}", id);
-        return needOrderRepository.findById(id)
+
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            return needOrderRepository.findById(id)
+                .map(needOrderMapper::toDto);
+        }
+
+        return needOrderRepository.findByIdAndUserLogin(id, SecurityUtils.getCurrentUserLogin().get())
             .map(needOrderMapper::toDto);
     }
 

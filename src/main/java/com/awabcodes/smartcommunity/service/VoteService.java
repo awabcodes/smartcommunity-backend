@@ -2,6 +2,8 @@ package com.awabcodes.smartcommunity.service;
 
 import com.awabcodes.smartcommunity.domain.Vote;
 import com.awabcodes.smartcommunity.repository.VoteRepository;
+import com.awabcodes.smartcommunity.security.AuthoritiesConstants;
+import com.awabcodes.smartcommunity.security.SecurityUtils;
 import com.awabcodes.smartcommunity.service.dto.VoteDTO;
 import com.awabcodes.smartcommunity.service.mapper.VoteMapper;
 import org.slf4j.Logger;
@@ -59,7 +61,13 @@ public class VoteService {
     @Transactional(readOnly = true)
     public Page<VoteDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Votes");
-        return voteRepository.findAll(pageable)
+
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            return voteRepository.findAll(pageable)
+                .map(voteMapper::toDto);
+        }
+
+        return voteRepository.findAllByUserLogin(pageable, SecurityUtils.getCurrentUserLogin().get())
             .map(voteMapper::toDto);
     }
 
@@ -73,7 +81,13 @@ public class VoteService {
     @Transactional(readOnly = true)
     public Optional<VoteDTO> findOne(Long id) {
         log.debug("Request to get Vote : {}", id);
-        return voteRepository.findById(id)
+
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            return voteRepository.findById(id)
+                .map(voteMapper::toDto);
+        }
+
+        return voteRepository.findByIdAndUserLogin(id, SecurityUtils.getCurrentUserLogin().get())
             .map(voteMapper::toDto);
     }
 
