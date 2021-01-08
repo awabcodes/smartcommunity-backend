@@ -104,6 +104,14 @@ public class PollResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/polls/user")
+    public ResponseEntity<List<PollDTO>> getAllPollsForUser(Pageable pageable) {
+        log.debug("REST request to get a page of Polls for user");
+        Page<PollDTO> page = pollService.findAllForUser(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     /**
      * {@code GET  /polls/:id} : get the "id" poll.
      *
@@ -123,7 +131,7 @@ public class PollResource {
         Optional<PollDTO> pollDTO = pollService.findOneByVote(id);
         return ResponseUtil.wrapOrNotFound(pollDTO);
     }
-    
+
     /**
      * {@code DELETE  /polls/:id} : delete the "id" poll.
      *

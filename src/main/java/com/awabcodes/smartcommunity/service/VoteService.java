@@ -27,9 +27,12 @@ public class VoteService {
 
     private final VoteMapper voteMapper;
 
-    public VoteService(VoteRepository voteRepository, VoteMapper voteMapper) {
+    private final PollService pollService;
+
+    public VoteService(VoteRepository voteRepository, VoteMapper voteMapper, PollService pollService) {
         this.voteRepository = voteRepository;
         this.voteMapper = voteMapper;
+        this.pollService = pollService;
     }
 
     /**
@@ -42,6 +45,8 @@ public class VoteService {
         log.debug("Request to save Vote : {}", voteDTO);
         Vote vote = voteMapper.toEntity(voteDTO);
         vote = voteRepository.save(vote);
+
+        pollService.addUserToPoll(vote);
         return voteMapper.toDto(vote);
     }
 

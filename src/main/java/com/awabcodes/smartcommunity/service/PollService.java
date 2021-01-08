@@ -1,6 +1,7 @@
 package com.awabcodes.smartcommunity.service;
 
 import com.awabcodes.smartcommunity.domain.Poll;
+import com.awabcodes.smartcommunity.domain.User;
 import com.awabcodes.smartcommunity.domain.Vote;
 import com.awabcodes.smartcommunity.repository.PollRepository;
 import com.awabcodes.smartcommunity.repository.VoteRepository;
@@ -14,6 +15,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -31,10 +35,13 @@ public class PollService {
 
     private final VoteRepository voteRepository;
 
-    public PollService(PollRepository pollRepository, PollMapper pollMapper, VoteRepository voteRepository) {
+    private final UserService userService;
+
+    public PollService(PollRepository pollRepository, PollMapper pollMapper, VoteRepository voteRepository, UserService userService) {
         this.pollRepository = pollRepository;
         this.pollMapper = pollMapper;
         this.voteRepository = voteRepository;
+        this.userService = userService;
     }
 
     /**
@@ -50,6 +57,14 @@ public class PollService {
         return pollMapper.toDto(poll);
     }
 
+    public PollDTO addUserToPoll(Vote vote) {
+        log.debug("Request to save current user to Poll vote is : {}", vote);
+        Optional<User> currentUser = userService.getUserWithAuthorities();
+        Optional<Poll> poll = pollRepository.findByChoicesId(vote.getChoice().getId());
+        poll.get().addUsers(currentUser.get());
+        return pollMapper.toDto(poll.get());
+    }
+
     /**
      * Get all the polls.
      *
@@ -63,6 +78,13 @@ public class PollService {
             .map(pollMapper::toDto);
     }
 
+    @Transactional(readOnly = true)
+    public Page<PollDTO> findAllForUser(Pageable pageable) {
+        log.debug("Request to get all Polls the user did not vote in");
+        Optional<User> currentUser = userService.getUserWithAuthorities();
+        return pollRepository.findAllByUsersIdNotOrUsersIsNull(pageable, currentUser.get().getId())
+            .map(pollMapper::toDto);
+    }
 
     /**
      * Get all the polls with eager load of many-to-many relationships.

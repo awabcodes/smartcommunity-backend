@@ -27,4 +27,6 @@ public interface PollRepository extends JpaRepository<Poll, Long> {
 
     @Query("select poll from Poll poll left join fetch poll.users where poll.id =:id")
     Optional<Poll> findOneWithEagerRelationships(@Param("id") Long id);
+
+    Page<Poll> findAllByUsersIdNotOrUsersIsNull(Pageable pageable, Long userId);
 }
