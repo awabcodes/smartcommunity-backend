@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -58,6 +59,12 @@ public class PollChoiceService {
             .map(pollChoiceMapper::toDto);
     }
 
+    @Transactional(readOnly = true)
+    public Page<PollChoiceDTO> findAllByPollId(Pageable pageable, Long id) {
+        log.debug("Request to get all PollChoices for poll");
+        return pollChoiceRepository.findAllByPollId(pageable, id)
+                .map(pollChoiceMapper::toDto);
+    }
 
     /**
      * Get one pollChoice by id.

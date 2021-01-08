@@ -1,7 +1,9 @@
 package com.awabcodes.smartcommunity.service;
 
 import com.awabcodes.smartcommunity.domain.Poll;
+import com.awabcodes.smartcommunity.domain.Vote;
 import com.awabcodes.smartcommunity.repository.PollRepository;
+import com.awabcodes.smartcommunity.repository.VoteRepository;
 import com.awabcodes.smartcommunity.service.dto.PollDTO;
 import com.awabcodes.smartcommunity.service.mapper.PollMapper;
 import org.slf4j.Logger;
@@ -27,9 +29,12 @@ public class PollService {
 
     private final PollMapper pollMapper;
 
-    public PollService(PollRepository pollRepository, PollMapper pollMapper) {
+    private final VoteRepository voteRepository;
+
+    public PollService(PollRepository pollRepository, PollMapper pollMapper, VoteRepository voteRepository) {
         this.pollRepository = pollRepository;
         this.pollMapper = pollMapper;
+        this.voteRepository = voteRepository;
     }
 
     /**
@@ -69,6 +74,14 @@ public class PollService {
     public Optional<PollDTO> findOne(Long id) {
         log.debug("Request to get Poll : {}", id);
         return pollRepository.findById(id)
+            .map(pollMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<PollDTO> findOneByVote(Long id) {
+        log.debug("Request to get Poll by Vote: {}", id);
+        Optional<Vote> vote = voteRepository.findById(id);
+        return pollRepository.findByChoicesId(vote.get().getChoice().getId())
             .map(pollMapper::toDto);
     }
 

@@ -98,6 +98,14 @@ public class PollChoiceResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/poll-choices/polls/{id}")
+    public ResponseEntity<List<PollChoiceDTO>> getAllPollChoicesInPoll(Pageable pageable, @PathVariable Long id) {
+        log.debug("REST request to get PollChoices for poll");
+        Page<PollChoiceDTO> page = pollChoiceService.findAllByPollId(pageable, id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     /**
      * {@code GET  /poll-choices/:id} : get the "id" pollChoice.
      *

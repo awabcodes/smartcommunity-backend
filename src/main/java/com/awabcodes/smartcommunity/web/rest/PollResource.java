@@ -111,6 +111,13 @@ public class PollResource {
         return ResponseUtil.wrapOrNotFound(pollDTO);
     }
 
+    @GetMapping("/polls/votes/{id}")
+    public ResponseEntity<PollDTO> getPollByVote(@PathVariable Long id) {
+        log.debug("REST request to get Poll by Vote : {}", id);
+        Optional<PollDTO> pollDTO = pollService.findOneByVote(id);
+        return ResponseUtil.wrapOrNotFound(pollDTO);
+    }
+
     /**
      * {@code DELETE  /polls/:id} : delete the "id" poll.
      *
