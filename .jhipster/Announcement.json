@@ -20,7 +20,7 @@
     {
       "fieldName": "type",
       "fieldType": "AnnouncementType",
-      "fieldValues": "NEWS,EVENT,OTHER",
+      "fieldValues": "NEWS,EVENT,MARKET,OTHER",
       "fieldValidateRules": ["required"]
     },
     {

@@ -44,8 +44,8 @@ public class FeedbackResourceIT {
     private static final String DEFAULT_CONTENT = "AAAAAAAAAA";
     private static final String UPDATED_CONTENT = "BBBBBBBBBB";
 
-    private static final FeedbackType DEFAULT_TYPE = FeedbackType.NEGATIVE;
-    private static final FeedbackType UPDATED_TYPE = FeedbackType.POSITIVE;
+    private static final FeedbackType DEFAULT_TYPE = FeedbackType.SUGGESTION;
+    private static final FeedbackType UPDATED_TYPE = FeedbackType.COMPLAINT;
 
     private static final FeedbackStatus DEFAULT_STATUS = FeedbackStatus.OPEN;
     private static final FeedbackStatus UPDATED_STATUS = FeedbackStatus.CLOSED;

@@ -26,7 +26,9 @@
                     <th scope="col"  jhiSortBy="title"><span jhiTranslate="smartcommunityApp.feedback.title">Title</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="content"><span jhiTranslate="smartcommunityApp.feedback.content">Content</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="type"><span jhiTranslate="smartcommunityApp.feedback.type">Type</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="status"><span jhiTranslate="smartcommunityApp.feedback.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="creationDate"><span jhiTranslate="smartcommunityApp.feedback.creationDate">Creation Date</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="image"><span jhiTranslate="smartcommunityApp.feedback.image">Image</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="userLogin"><span jhiTranslate="smartcommunityApp.feedback.user">User</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
@@ -37,7 +39,14 @@
                     <td>{{ feedback.title }}</td>
                     <td>{{ feedback.content }}</td>
                     <td jhiTranslate="{{ 'smartcommunityApp.FeedbackType.' + feedback.type }}">{{ feedback.type }}</td>
+                    <td jhiTranslate="{{ 'smartcommunityApp.FeedbackStatus.' + feedback.status }}">{{ feedback.status }}</td>
                     <td>{{ feedback.creationDate | date:'medium' }}</td>
+                    <td>
+                        <a *ngIf="feedback.image" (click)="openFile(feedback.imageContentType, feedback.image)">
+                            <img [src]="'data:' + feedback.imageContentType + ';base64,' + feedback.image" style="max-height: 30px;" alt="feedback image"/>
+                        </a>
+                        <span *ngIf="feedback.image">{{ feedback.imageContentType }}, {{ byteSize(feedback.image) }}</span>
+                    </td>
                     <td>
                         {{ feedback.userLogin }}
                     </td>

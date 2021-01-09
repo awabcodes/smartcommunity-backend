@@ -3,5 +3,7 @@ export const enum AnnouncementType {
 
   EVENT = 'EVENT',
 
+  MARKET = 'MARKET',
+
   OTHER = 'OTHER',
 }

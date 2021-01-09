@@ -42,8 +42,11 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="smartcommunityApp.feedback.type" for="field_type">Type</label>
                     <select class="form-control" name="type" formControlName="type" id="field_type">
-                        <option value="NEGATIVE">{{ 'smartcommunityApp.FeedbackType.NEGATIVE' | translate }}</option>
-                        <option value="POSITIVE">{{ 'smartcommunityApp.FeedbackType.POSITIVE' | translate }}</option>
+                        <option value="SUGGESTION">{{ 'smartcommunityApp.FeedbackType.SUGGESTION' | translate }}</option>
+                        <option value="COMPLAINT">{{ 'smartcommunityApp.FeedbackType.COMPLAINT' | translate }}</option>
+                        <option value="WATER_COMPLAINT">{{ 'smartcommunityApp.FeedbackType.WATER_COMPLAINT' | translate }}</option>
+                        <option value="AUTUMN_COMPLAINT">{{ 'smartcommunityApp.FeedbackType.AUTUMN_COMPLAINT' | translate }}</option>
+                        <option value="SECURITY_COMPLAINT">{{ 'smartcommunityApp.FeedbackType.SECURITY_COMPLAINT' | translate }}</option>
                     </select>
                     <div *ngIf="editForm.get('type')!.invalid && (editForm.get('type')!.dirty || editForm.get('type')!.touched)">
                         <small class="form-text text-danger"

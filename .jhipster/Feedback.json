@@ -15,7 +15,7 @@
     {
       "fieldName": "type",
       "fieldType": "FeedbackType",
-      "fieldValues": "NEGATIVE,POSITIVE",
+      "fieldValues": "SUGGESTION,COMPLAINT,WATER_COMPLAINT,AUTUMN_COMPLAINT,SECURITY_COMPLAINT",
       "fieldValidateRules": ["required"]
     },
     {

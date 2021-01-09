@@ -1,6 +1,6 @@
 
 enum AnnouncementType {
-	NEWS, EVENT, OTHER
+	NEWS, EVENT, MARKET, OTHER
 }
 
 entity Announcement {
@@ -31,7 +31,7 @@ entity NeedOrder {
 }
 
 enum FeedbackType {
-	NEGATIVE, POSITIVE
+	SUGGESTION, COMPLAINT, WATER_COMPLAINT, AUTUMN_COMPLAINT, SECURITY_COMPLAINT
 }
 
 enum FeedbackStatus {

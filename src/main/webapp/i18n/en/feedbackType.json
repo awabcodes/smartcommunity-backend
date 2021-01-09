@@ -2,8 +2,11 @@
   "smartcommunityApp": {
     "FeedbackType": {
       "null": "",
-      "NEGATIVE": "NEGATIVE",
-      "POSITIVE": "POSITIVE"
+      "SUGGESTION": "SUGGESTION",
+      "COMPLAINT": "COMPLAINT",
+      "WATER_COMPLAINT": "WATER_COMPLAINT",
+      "AUTUMN_COMPLAINT": "AUTUMN_COMPLAINT",
+      "SECURITY_COMPLAINT": "SECURITY_COMPLAINT"
     }
   }
 }

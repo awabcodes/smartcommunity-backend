@@ -26,7 +26,16 @@ describe('Service Tests', () => {
       httpMock = injector.get(HttpTestingController);
       currentDate = moment();
 
-      elemDefault = new Feedback(0, 'AAAAAAA', 'AAAAAAA', FeedbackType.NEGATIVE, FeedbackStatus.OPEN, currentDate, 'image/png', 'AAAAAAA');
+      elemDefault = new Feedback(
+        0,
+        'AAAAAAA',
+        'AAAAAAA',
+        FeedbackType.SUGGESTION,
+        FeedbackStatus.OPEN,
+        currentDate,
+        'image/png',
+        'AAAAAAA'
+      );
     });
 
     describe('Service methods', () => {

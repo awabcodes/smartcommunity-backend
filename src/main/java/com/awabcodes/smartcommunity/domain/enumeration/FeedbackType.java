@@ -4,5 +4,5 @@ package com.awabcodes.smartcommunity.domain.enumeration;
  * The FeedbackType enumeration.
  */
 public enum FeedbackType {
-    NEGATIVE, POSITIVE
+    SUGGESTION, COMPLAINT, WATER_COMPLAINT, AUTUMN_COMPLAINT, SECURITY_COMPLAINT
 }
