@@ -22,7 +22,7 @@ export class DonationRequestUpdateComponent implements OnInit {
     info: [null, [Validators.required]],
     totalAmount: [null, [Validators.required]],
     contact: [null, [Validators.required]],
-    amountRaised: [],
+    amountRaised: [0, [Validators.min(0)]],
     active: [],
   });
 

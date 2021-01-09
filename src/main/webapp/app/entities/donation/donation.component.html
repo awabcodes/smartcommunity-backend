@@ -1,13 +1,6 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="smartcommunityApp.donation.home.title">Donations</span>
-
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-donation" [routerLink]="['/donation/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="smartcommunityApp.donation.home.createLabel">
-            Create a new Donation
-            </span>
-        </button>
     </h2>
 
     <jhi-alert-error></jhi-alert-error>
@@ -58,16 +51,11 @@
                             </button>
 
                             <button type="submit"
-                                    [routerLink]="['/donation', donation.id, 'edit']"
-                                    class="btn btn-primary btn-sm">
+                                    *ngIf="!donation.collected"
+                                    (click)="collected(donation)"
+                                    class="btn btn-success btn-sm">
                                 <fa-icon icon="pencil-alt"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                            </button>
-
-                            <button type="submit" (click)="delete(donation)"
-                                    class="btn btn-danger btn-sm">
-                                <fa-icon icon="times"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.collected">Collected</span>
                             </button>
                         </div>
                     </td>

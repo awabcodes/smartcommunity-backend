@@ -10,6 +10,7 @@ import { IFeedback } from 'app/shared/model/feedback.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { FeedbackService } from './feedback.service';
 import { FeedbackDeleteDialogComponent } from './feedback-delete-dialog.component';
+import { FeedbackStatus } from 'app/shared/model/enumerations/feedback-status.model';
 
 @Component({
   selector: 'jhi-feedback',
@@ -123,5 +124,10 @@ export class FeedbackComponent implements OnInit, OnDestroy {
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+  }
+
+  close(feedback: IFeedback): void {
+    feedback.status = FeedbackStatus.CLOSED;
+    this.feedbackService.update(feedback).subscribe(() => this.loadPage());
   }
 }

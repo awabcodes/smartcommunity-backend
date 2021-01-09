@@ -115,4 +115,9 @@ export class DonationComponent implements OnInit, OnDestroy {
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
   }
+
+  collected(donation: IDonation): void {
+    donation.collected = true;
+    this.donationService.update(donation).subscribe(() => this.loadPage());
+  }
 }

@@ -1,13 +1,6 @@
 <div>
     <h2 id="page-heading">
         <span jhiTranslate="smartcommunityApp.feedback.home.title">Feedbacks</span>
-
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-feedback" [routerLink]="['/feedback/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="smartcommunityApp.feedback.home.createLabel">
-            Create a new Feedback
-            </span>
-        </button>
     </h2>
 
     <jhi-alert-error></jhi-alert-error>
@@ -60,10 +53,11 @@
                             </button>
 
                             <button type="submit"
-                                    [routerLink]="['/feedback', feedback.id, 'edit']"
-                                    class="btn btn-primary btn-sm">
+                                    *ngIf="feedback.status === 'OPEN'"
+                                    (click)="close(feedback)"
+                                    class="btn btn-success btn-sm">
                                 <fa-icon icon="pencil-alt"></fa-icon>
-                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.close">close</span>
                             </button>
 
                             <button type="submit" (click)="delete(feedback)"

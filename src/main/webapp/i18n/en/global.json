@@ -107,7 +107,9 @@
       "edit": "Edit",
       "open": "Open",
       "save": "Save",
-      "view": "View"
+      "view": "View",
+      "close": "Audited",
+      "collected": "Collected"
     },
     "detail": {
       "field": "Field",

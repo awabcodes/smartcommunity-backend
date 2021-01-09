@@ -31,7 +31,6 @@
                         <a (click)="openFile(need.imageContentType, need.image)">
                             <img [src]="'data:' + need.imageContentType + ';base64,' + need.image" style="max-width: 100%;" alt="need image"/>
                         </a>
-                        {{ need.imageContentType }}, {{ byteSize(need.image) }}
                     </div>
                 </dd>
                 <dt><span jhiTranslate="smartcommunityApp.need.quantity">Quantity</span></dt>
