@@ -83,6 +83,16 @@ export class PollComponent implements OnInit, OnDestroy {
     this.eventSubscriber = this.eventManager.subscribe('pollListModification', () => this.loadPage());
   }
 
+  activate(poll: IPoll): void {
+    poll.active = true;
+    this.pollService.update(poll).subscribe(() => this.loadPage());
+  }
+
+  deactivate(poll: IPoll): void {
+    poll.active = false;
+    this.pollService.update(poll).subscribe(() => this.loadPage());
+  }
+
   delete(poll: IPoll): void {
     const modalRef = this.modalService.open(PollDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.poll = poll;

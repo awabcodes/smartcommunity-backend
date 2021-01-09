@@ -109,7 +109,9 @@
       "save": "حفظ",
       "view": "عرض",
       "close": "تم المراجعة",
-      "collected": "تم الاستلام"
+      "collected": "تم الاستلام",
+      "activate": "تفعيل",
+      "deactivate": "تعطيل"
     },
     "detail": {
       "field": "حقل",

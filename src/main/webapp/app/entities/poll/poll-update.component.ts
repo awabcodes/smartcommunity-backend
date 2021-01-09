@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
@@ -13,6 +13,8 @@ import { IPollChoice, PollChoice } from 'app/shared/model/poll-choice.model';
 import { PollChoiceService } from '../poll-choice/poll-choice.service';
 import { IUser } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PollChoiceDeleteDialogComponent } from '../poll-choice/poll-choice-delete-dialog.component';
 
 @Component({
   selector: 'jhi-poll-update',
@@ -21,6 +23,7 @@ import { UserService } from 'app/core/user/user.service';
 export class PollUpdateComponent implements OnInit {
   isSaving = false;
   users: IUser[] = [];
+  pollChoices: IPollChoice[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -42,7 +45,9 @@ export class PollUpdateComponent implements OnInit {
     protected pollChoiceService: PollChoiceService,
     protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    protected router: Router,
+    protected modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -97,10 +102,20 @@ export class PollUpdateComponent implements OnInit {
     };
   }
 
+  deleteChoice(pollChoice: IPollChoice): void {
+    const modalRef = this.modalService.open(PollChoiceDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.pollChoice = pollChoice;
+    this.pollChoices = this.pollChoices.filter(val => val.id !== pollChoice.id);
+  }
+
   saveChoice(): void {
-    this.isSaving = true;
-    const pollChoice = this.createChoiceFromForm();
-    this.subscribeToSaveResponse(this.pollChoiceService.create(pollChoice));
+    if (this.editForm.get(['id'])!.value) {
+      this.isSaving = true;
+      const pollChoice = this.createChoiceFromForm();
+      this.subscribeToSaveChoiceResponse(this.pollChoiceService.create(pollChoice));
+    } else {
+      alert('Please create the Poll first');
+    }
   }
 
   private createChoiceFromForm(): IPollChoice {
@@ -113,7 +128,20 @@ export class PollUpdateComponent implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IPoll>>): void {
     result.subscribe(
-      () => this.onSaveSuccess(),
+      poll => {
+        this.onSaveSuccess();
+        this.updateForm(poll.body!);
+      },
+      () => this.onSaveError()
+    );
+  }
+
+  protected subscribeToSaveChoiceResponse(result: Observable<HttpResponse<IPollChoice>>): void {
+    result.subscribe(
+      choice => {
+        this.onSaveSuccess();
+        this.pollChoices.push(choice.body!);
+      },
       () => this.onSaveError()
     );
   }

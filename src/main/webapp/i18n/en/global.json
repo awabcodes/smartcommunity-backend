@@ -109,7 +109,9 @@
       "save": "Save",
       "view": "View",
       "close": "Audited",
-      "collected": "Collected"
+      "collected": "Collected",
+      "activate": "Activate",
+      "deactivate": "Deactivate"
     },
     "detail": {
       "field": "Field",

@@ -24,18 +24,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="smartcommunityApp.poll.active" for="field_active">Active</label>
-                    <input type="checkbox" class="form-control" name="active" id="field_active"
-                           formControlName="active"/>
-                    <div *ngIf="editForm.get('active')!.invalid && (editForm.get('active')!.dirty || editForm.get('active')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('active')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-
-                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="smartcommunityApp.poll.createdBy" for="field_createdBy">Created By</label>
                     <input type="text" class="form-control" name="createdBy" id="field_createdBy"
                            formControlName="createdBy"/>
@@ -60,6 +48,18 @@
                         <small class="form-text text-danger"
                             [hidden]="!editForm.get('creationDate')?.errors?.ZonedDateTimelocal" jhiTranslate="entity.validation.ZonedDateTimelocal">
                             This field should be a date and time.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="smartcommunityApp.poll.active" for="field_active">Active</label>
+                    <input type="checkbox" class="form-control" name="active" id="field_active"
+                           formControlName="active"/>
+                    <div *ngIf="editForm.get('active')!.invalid && (editForm.get('active')!.dirty || editForm.get('active')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('active')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
                         </small>
                     </div>
                 </div>
@@ -103,5 +103,30 @@
                 </div>
             </div>
         </form>
+
+        <br>
+
+        <div class="table-responsive" id="entities" *ngIf="pollChoices && pollChoices.length > 0">
+            <table class="table table-striped" aria-describedby="page-heading">
+                <thead>
+                    <tr>
+                        <th scope="col"><span jhiTranslate="smartcommunityApp.pollChoice.choice">Choice</span> <fa-icon icon="sort"></fa-icon></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let pollChoice of pollChoices">
+                        <td>{{ pollChoice.choice }}</td>
+                        <td class="text-right">
+                            <button type="submit" (click)="deleteChoice(pollChoice)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

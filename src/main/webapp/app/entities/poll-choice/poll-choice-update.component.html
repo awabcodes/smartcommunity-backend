@@ -23,19 +23,6 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="smartcommunityApp.pollChoice.poll" for="field_poll">Poll</label>
-                    <select class="form-control" id="field_poll" name="poll" formControlName="pollId">
-                        <option *ngIf="!editForm.get('pollId')!.value" [ngValue]="null" selected></option>
-                        <option [ngValue]="pollOption.id" *ngFor="let pollOption of polls; trackBy: trackById">{{ pollOption.question }}</option>
-                    </select>
-                </div>
-                <div *ngIf="editForm.get('pollId')!.invalid && (editForm.get('pollId')!.dirty || editForm.get('pollId')!.touched)">
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('pollId')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                    </small>
-                </div>
             </div>
 
             <div>
